@@ -41,7 +41,7 @@ const Submission = () => {
             theme={vscodeDark}
             onChange={(e) => { setCode(e) }}
           />
-          </div>
+        </div>
 
 
         <form className='flex flex-col w-full md:w-1/3 mx-auto gap-4' onSubmit={handleSubmit}>

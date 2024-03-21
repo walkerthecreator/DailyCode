@@ -1,7 +1,11 @@
 const express = require('express')
 let app = express()
 const cors = require('cors')
-const { Query , InsertQuery } = require('./config')
+const Submission = require('./submission.model')
+const dotenv = require("dotenv").config()
+const db = require('./config/mongoConfig')
+
+
 
 app.use(cors())
 app.use(express.json())
@@ -12,7 +16,8 @@ app.get('/' , (req ,res ) =>{
 
 app.get('/view' , async (req , res) => {
     try{
-        let data = await Query('SELECT * FROM USER')
+        // let data = await Query('SELECT * FROM USER')
+        let data = await Submission.find()
         return res.status(201).json({ data })
     }
     catch(err){
@@ -24,7 +29,8 @@ app.get('/view' , async (req , res) => {
 app.post('/add-new-submission' , async (req ,res) => {
     try{
         const { username , code , language , stdin } = req.body
-        let data = await InsertQuery('INSERT INTO user (name, type , source, stdin) VALUES (?, ?, ?, ?)' , [username , language , code , stdin])
+        // let data = await InsertQuery('INSERT INTO user (name, type , source, stdin) VALUES (?, ?, ?, ?)' , [username , language , code , stdin])
+        let data  = await Submission.create({ username , code , language , stdin })
         console.log("data" , data)
         return res.status(201).json({ data })
     }
